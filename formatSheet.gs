@@ -118,3 +118,45 @@ function formatSheet1() {
 //Set width of Comments column to 120
   sheet1.setColumnWidth(numColumns, 120); 
 }
+
+function hideRowsColumns() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet1 = ss.getSheetByName("Sheet1");
+
+//hide columns L to R
+  var columnsToHide = sheet1.getRange("L1:R1");
+  sheet1.hideColumn(columnsToHide); 
+
+//hide french classes (rows 4 & 10)
+  var row4 = sheet1.getRange("A4");
+  var row10 = sheet1.getRange("A10"); 
+  sheet1.hideRow(row4);
+  sheet1.hideRow(row10);
+}
+
+function unhideRowsColumns() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet1 = ss.getSheetByName("Sheet1");
+
+//unhide all the columns
+  var numColumns = sheet1.getLastColumn();
+  var allColumns = sheet1.getRange(1, 1, 1, numColumns);
+  sheet1.unhideColumn(allColumns);
+
+//unhide all the rows  
+  var numRows = sheet1.getLastRow();
+  var allRows = sheet1.getRange(1, 1, numRows, 1);
+  sheet1.unhideRow(allRows);    
+}
+
+function getHexValue() {
+  var colourSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("ColourRefs");
+  for (c=1;c<22;c+=2){
+    for (r=1;r<11;r++){
+      if(c>1 && r>7) {
+        break;}
+    var hexCode = colourSheet.getRange(r,c).getBackground();
+    colourSheet.getRange(r,c+1).setValue(hexCode);
+ }
+}
+}
